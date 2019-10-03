@@ -1,0 +1,14 @@
+{
+  "name": "cicd",
+  "version": "1.0.0",
+  "description": "CI/CD Tool for Github Repos",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Lou-Magnuson",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
