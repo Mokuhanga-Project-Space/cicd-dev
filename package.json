@@ -1,0 +1,23 @@
+{
+  "name": "mokuhanga",
+  "version": "1.0.0",
+  "description": "site and services for mokuhanga project space",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skagit/mokuhanga.git"
+  },
+  "author": "Matthew Lou-Magnuson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skagit/mokuhanga/issues"
+  },
+  "homepage": "https://github.com/skagit/mokuhanga#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^2.0.4"
+  }
+}
