@@ -8,15 +8,15 @@ const https = require('https')
 // 3rd Party Modules
 const express = require('express')
 
-// App Routing
+//// EXPRESS INIT ////
 const app = express()
 app.set('view engine', 'pug')
 
-app.use(express.static('public'))
 
-app.get('/', (req, res) => {
-    res.render('index', {'name': 'Matt'})
-})
+//// ROUTING ////
+
+const routes = require('./src/routes/routes.js')
+routes.route(app)
 
 //// SERVER INIT ////
 

@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+head
+  title Workshop Application
+  include ./head.pug
+
+body
+
+.container
+    .row(style="text-align:center;")
+        h1 2020 Workshop Application
+    .row
+        .six.columns
+            label Name
+            input.u-full-width(type="text" placeholder="full name")
+
+        .six.columns
+            label E-Mail
+            input.u-full-width(type="text" placeholder="address for contact")
+    .row
+        .ten.columns &nbsp
+
+        .two.columns
+            input.button(type="button" value="submit" style="text-align:center;")
