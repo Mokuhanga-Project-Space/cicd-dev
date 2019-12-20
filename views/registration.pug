@@ -9,16 +9,45 @@ body
 .container
     .row(style="text-align:center;")
         h1 2020 Workshop Application
-    .row
-        .six.columns
-            label Name
-            input.u-full-width(type="text" placeholder="full name")
 
-        .six.columns
-            label E-Mail
-            input.u-full-width(type="text" placeholder="address for contact")
-    .row
-        .ten.columns &nbsp
+    form(action="/registration_2020" method="post")
+        .row
+            .six.columns
+                label Name
+                input.u-full-width(type="text")
 
-        .two.columns
-            input.button(type="button" value="submit" style="text-align:center;")
+            .six.columns
+                label E-Mail
+                input.u-full-width(type="text")
+        .row
+            .six.columns
+                label Address
+                input.u-full-width(type="text")
+
+            .six.columns
+                label Unit Number
+                input.u-full-width(type="text")
+        .row
+            .six.columns
+                label City
+                input.u-full-width(type="text")
+
+            .two.columns
+                label State
+                input.u-full-width(type="text")
+            .four.columns
+                label Zip Code
+                input.u-full-width(type="text")
+        .row
+            hr
+            label Previous Experience
+            p.
+                As this is an advanced workshop, please describe you experience with Mokuhanga and related activities.
+                #[br] #[br]
+                Please include dates, locations, primary instructors, as well as any relevant description of work.
+            textarea.u-full-width(style="height:40vh;" rows=10)
+        .row
+            button.button-primary.u-full-width(type="submit" style="text-align:center;") Submit
+
+    script
+        include ../src/js/registration.js

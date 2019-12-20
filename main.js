@@ -9,14 +9,16 @@ const https = require('https')
 const express = require('express')
 
 //// EXPRESS INIT ////
+
 const app = express()
 app.set('view engine', 'pug')
 
 
 //// ROUTING ////
 
-const routes = require('./src/routes/routes.js')
-routes.route(app)
+// Express
+const express_router = require('./src/router/express.js')
+express_router.route(app)
 
 //// SERVER INIT ////
 
