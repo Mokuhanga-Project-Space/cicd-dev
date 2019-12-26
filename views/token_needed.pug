@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+head
+  title Mokuhanga Token
+  include ./head.pug
+
+body
+
+.container
+    .row(style="text-align:center;")
+        h1 No Valid Access Token
+        p You need an access token to use restricted features.
+        p If you already retrieved one, it may have expired.
+        - const fwd = `/login?fwd=${locals.url}`
+        p Please #[a(href=fwd) login with your credentials] and try again.

@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
 head
-  title Workshop Application
+  title 2020 Workshop Application
   include ./head.pug
 
 body
@@ -14,30 +14,30 @@ body
         .row
             .six.columns
                 label Name
-                input.u-full-width(type="text")
+                input.u-full-width(type="text" name="name")
 
             .six.columns
                 label E-Mail
-                input.u-full-width(type="text")
+                input.u-full-width(type="text" name="email")
         .row
             .six.columns
                 label Address
-                input.u-full-width(type="text")
+                input.u-full-width(type="text" name="address")
 
             .six.columns
                 label Unit Number
-                input.u-full-width(type="text")
+                input.u-full-width(type="text" name="unitNumber")
         .row
             .six.columns
                 label City
-                input.u-full-width(type="text")
+                input.u-full-width(type="text" name="city")
 
             .two.columns
                 label State
-                input.u-full-width(type="text")
+                input.u-full-width(type="text" name="state")
             .four.columns
                 label Zip Code
-                input.u-full-width(type="text")
+                input.u-full-width(type="text" name="zip")
         .row
             hr
             label Previous Experience
@@ -45,9 +45,6 @@ body
                 As this is an advanced workshop, please describe you experience with Mokuhanga and related activities.
                 #[br] #[br]
                 Please include dates, locations, primary instructors, as well as any relevant description of work.
-            textarea.u-full-width(style="height:40vh;" rows=10)
+            textarea.u-full-width(type="text" style="height:40vh;" rows=10 name="experience")
         .row
             button.button-primary.u-full-width(type="submit" style="text-align:center;") Submit
-
-    script
-        include ../src/js/registration.js

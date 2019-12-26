@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+head
+  title Mokuhanga Login
+  include ./head.pug
+
+body
+
+.container(style="text-align:center;")
+    .row
+        h1 Restricted Features Login
+
+    form(action="/login" method="post")
+        .row
+            .three.columns &nbsp;
+            .six.columns
+                label User Name
+                input.u-full-width(type="text" name="user")
+        .row
+            .three.columns &nbsp;
+            .six.columns
+                label Password
+                input.u-full-width(type="text" name="password")
+       
+        .row(style="text-align:right;")
+            .three.columns &nbsp;
+            .six.columns
+                button.button-primary(type="submit" style="text-align:center;") Submit

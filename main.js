@@ -22,10 +22,13 @@ express_router.route(app)
 
 //// SERVER INIT ////
 
-// HTTP -> HTTPS Redirect Server
-const redirect_server = require('./src/http/redirect').server
-redirect_server.init()
-
-// Main HTTPS Server
-const server = require('./src/https/secure').server
+const server = require('./src/http/nonsecure').server
 server.init(app)
+
+// // HTTP -> HTTPS Redirect Server
+// const redirect_server = require('./src/http/redirect').server
+// redirect_server.init()
+
+// // Main HTTPS Server
+// const server = require('./src/https/secure').server
+// server.init(app)
