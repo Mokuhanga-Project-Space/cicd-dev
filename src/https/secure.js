@@ -7,8 +7,7 @@ const https = require('https')
 //// DEFINITION ////
 
 class Secure_Server {
-    constructor () {
-        const config = require('../../private/config.json')
+    constructor (config) {
         const privateKey = fs.readFileSync(config.key).toString()
         const certificate = fs.readFileSync(config.cert).toString()
         this.credentials = {
@@ -17,15 +16,24 @@ class Secure_Server {
         }
     }
 
-    init(router) {
-        const port = 443
+    init(router, port=443) {
         this.server = https.createServer(this.credentials, router)
         this.server.listen(port)
+    }
+
+    // close() {
+    //     this.server.close()
+    // }
+
+    close() {
+        return new Promise ( (resolve, reject) => {
+            this.server.close( () => {
+                resolve()
+            })
+        }) 
     }
 }
 
 //// EXPORT ////
 
-//singleton export
-const server = new Secure_Server()
-exports.server = server
+exports.secure_server = Secure_Server

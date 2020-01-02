@@ -10,7 +10,7 @@ body
     .row(style="text-align:center;")
         h1 2020 Workshop Application
 
-    form(action="/registration_2020" method="post")
+    form(name="application" action="/application_2020" method="post" onsubmit="return validateApplication()")
         .row
             .six.columns
                 label Name
@@ -20,13 +20,9 @@ body
                 label E-Mail
                 input.u-full-width(type="text" name="email")
         .row
-            .six.columns
-                label Address
+            .ten.columns
+                label Street Address
                 input.u-full-width(type="text" name="address")
-
-            .six.columns
-                label Unit Number
-                input.u-full-width(type="text" name="unitNumber")
         .row
             .six.columns
                 label City
@@ -48,3 +44,31 @@ body
             textarea.u-full-width(type="text" style="height:40vh;" rows=10 name="experience")
         .row
             button.button-primary.u-full-width(type="submit" style="text-align:center;") Submit
+
+script. 
+    function validateApplication() {
+        const application = document.forms.application
+        let values = {}
+        for (el of application) {
+            values[el.name] = el.value
+        }
+        const { name, email, address, city, state, zip } = values
+
+        const hasAddress = 
+            address != "" &&
+            city != "" &&
+            state != "" &&
+            zip  != ""
+        const hasEmail = email != ""
+        const hasName = name != ""
+        const canContact = hasName && (hasEmail || hasAddress)
+        
+        if (canContact) {
+            return true
+        }
+        
+        else {
+            alert("Please make sure you have completely filled out the form, including either an active mailing or email address.")
+        }
+        return false
+    }

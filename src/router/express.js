@@ -5,6 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
+
 // Markdown rendering
 // CLI: npm install jstransformer-markdown-it
 // REQUIRE: const md = require('jstransformer')(require('jstransformer-markdown-it'))
@@ -12,19 +13,16 @@ const cookieParser = require('cookie-parser')
 // PUG USE: != str
 
 // Controllers
-const { getApplications } = require('../application/controller')
-const { getAccessToken } = require('../security/token')
-const { verifyLogin, secureAccess } = require('../security/controller')
-
-
-
+const { apply, htmlView } = require('../application/controller')
+const { secureAccess, authZ } = require('../security/controller')
+ 
 //// DEFINITION ////
-function route(app) {
+function route(app, config) {
 	
 	//// PUBLIC
 	app.use(express.static('public'))
 
-	//// Middleware
+	//// MIDDLEWARE
 	app.use(cookieParser())
 	app.use(bodyParser.urlencoded({ extended: true }))
 	app.use(bodyParser.json())
@@ -33,65 +31,69 @@ function route(app) {
 
 	// Splash 
 	app.get('/', (req, res) => {
-		res.render('index')
+		try {
+			res.render('index')
+		}
+		catch (error) {
+			console.log(error)
+		}
 	})
 
 	// Login
 	app.get('/login', (req, res) => {
-		res.render('login')
+		try {
+			res.render('login', {url: req.query.fwd})
+		}
+		catch (error) {
+			console.log(error)
+		}
 	})
 
 	app.post('/login', async (req, res) => {
-		const authenticated = await verifyLogin(req)
-		if (authenticated) {
-			const accessToken = getAccessToken()
-			res.cookie(`mokuhanga-access`, JSON.stringify(accessToken), {
-				httpOnly: true
-			})
-			if (req.query.fwd) {
-				res.redirect(req.query.fwd)
-			}
-			else {
-				res.render('login_complete')
-			}
+		try {
+			await authZ(req, res)
 		}
-		else {
-			res.render('login_failed')
+		catch (error) {
+			console.log(error)
 		}
 	})
 
-	// Registration
+	// Application
 	app.get('/application_2020', (req, res) => {
-		res.render('application')
+		try {
+			res.render('application')
+		}
+		catch (error) {
+			console.log(error)
+		}
 	})
 
 	app.post('/application_2020', async (req, res) => {
-	    try {
-			const data = await register(req)
-			res.render('application_complete', data)
-		}
-		catch (error) {
-			console.log(error)
-		}
-	})
-
-	app.get('/application_2020/view', async (req, res) => {
 		try {
-			if (secureAccess(req, res)) {
-				const data = await getApplications()
-				console.log(data)
-				res.render('application_view', {apps: data})
-			}
-			else {
-				res.status(404)
-				res.send()
-			}
+			await apply(req, res)
 		}
 		catch (error) {
 			console.log(error)
 		}
 	})
 
+	app.get('/application_2020/view', (req, res, next) => {
+		try {
+			secureAccess(req, res, next, ["admin"])
+		}
+		catch (error) {
+			console.log(error)
+		}
+	}, async (req, res) => {
+		try {
+			await htmlView(req, res)
+		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+
+	
 }
 
 

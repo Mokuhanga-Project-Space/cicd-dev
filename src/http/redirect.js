@@ -19,14 +19,23 @@ class Redirect_Server {
         response.end()
     }
 
-    init(){
-        const port = 80
+    init(port=80){
         this.server.listen(port)
+    }
+
+    // close() {
+    //     this.server.close()
+    // }
+
+    close() {
+        return new Promise ( (resolve, reject) => {
+            this.server.close( () => {
+                resolve()
+            })
+        }) 
     }
 }
 
 //// EXPORT ////
 
-//singleton export
-const server = new Redirect_Server()
-exports.server = server
+exports.redirect_server = Redirect_Server

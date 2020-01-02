@@ -29,7 +29,6 @@ async function readFiles(folder) {
     try {
         console.log("reading files in directory " + folder)
         const filenames = await fs.readdir(folder)
-        console.log(filenames)
         let data = []
         for (filename of filenames) {
             if (filename[0] != ".") {

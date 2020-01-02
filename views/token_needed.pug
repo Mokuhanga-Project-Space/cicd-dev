@@ -8,8 +8,16 @@ body
 
 .container
     .row(style="text-align:center;")
-        h1 No Valid Access Token
-        p You need an access token to use restricted features.
-        p If you already retrieved one, it may have expired.
-        - const fwd = `/login?fwd=${locals.url}`
-        p Please #[a(href=fwd) login with your credentials] and try again.
+        if locals.reason == "no token"
+          h1 No Access Token
+          p You need an access token to use restricted features.
+        else
+          h1 Invalid Access Token
+          if locals.reason == "invalid token"
+            p Your token has either expired due to timeout or an internal security rotation.
+          else
+            p You do not have the required permissions to use this feature
+
+        unless locals.reason == "invalid role"
+          - const fwd = `/login?fwd=${locals.url}`
+          p Please #[a(href=fwd) login with your credentials] and try again.

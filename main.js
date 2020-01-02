@@ -1,34 +1,37 @@
 //// DEPENDENCIES ////
 
 // NodeJS Modules
-const fs = require('fs')
-const http = require('http')
-const https = require('https')
 
 // 3rd Party Modules
 const express = require('express')
+
+// Config
+const config = require('../config.json')
 
 //// EXPRESS INIT ////
 
 const app = express()
 app.set('view engine', 'pug')
 
-
 //// ROUTING ////
 
 // Express
 const express_router = require('./src/router/express.js')
-express_router.route(app)
+express_router.route(app, config)
 
 //// SERVER INIT ////
 
-const server = require('./src/http/nonsecure').server
-server.init(app)
+// HTTP -> HTTPS Redirect Server
+const { redirect_server } = require('./src/http/redirect')
+const redirect = new redirect_server()
+redirect.init()
 
-// // HTTP -> HTTPS Redirect Server
-// const redirect_server = require('./src/http/redirect').server
-// redirect_server.init()
+// Main HTTPS Server
+const { secure_server } = require('./src/https/secure')
+const secure = new secure_server(config)
+secure.init(app)
 
-// // Main HTTPS Server
-// const server = require('./src/https/secure').server
-// server.init(app)
+// Email Transporter
+const email = require('./src/email/controller')
+console.log(config)
+email.init(config)

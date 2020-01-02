@@ -10,7 +10,8 @@ body
     .row
         h1 Restricted Features Login
 
-    form(action="/login" method="post")
+    - const fwd = locals.url ? `/login?fwd=${locals.url}` : `/login`
+    form(action=fwd method="post")
         .row
             .three.columns &nbsp;
             .six.columns
@@ -20,7 +21,7 @@ body
             .three.columns &nbsp;
             .six.columns
                 label Password
-                input.u-full-width(type="text" name="password")
+                input.u-full-width(type="password" name="password")
        
         .row(style="text-align:right;")
             .three.columns &nbsp;

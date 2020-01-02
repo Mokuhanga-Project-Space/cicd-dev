@@ -3,10 +3,11 @@ const hash = require("../security/hash")
 function getBaseToken () {
     return {
         data: {
-            role: "admin",
+            user: "",
+            role: "",
             expiration: Date.now() + (60 * 60 * 1000)
         },
-        signature: "unsigned"
+        signature: ""
     }
 }
 
@@ -19,8 +20,10 @@ function signToken (token) {
     return token
 }
 
-function getAccessToken() {
-    const token = getBaseToken()
+function getAccessToken(user, role) {
+    let token = getBaseToken()
+    token.data.user = user
+    token.data.role = role
     return signToken(token)
 }
 
