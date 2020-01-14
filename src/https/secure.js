@@ -21,10 +21,6 @@ class Secure_Server {
         this.server.listen(port)
     }
 
-    // close() {
-    //     this.server.close()
-    // }
-
     close() {
         return new Promise ( (resolve, reject) => {
             this.server.close( () => {

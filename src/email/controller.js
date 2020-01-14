@@ -11,7 +11,7 @@ async function confirmApllication(toAddress, name) {
         await transporter.sendMail({
             from: 'info@mokuhangaprojectspace.com',
             to: toAddress,
-            bcc: "matt@loumagnuson.com",
+            bcc: "matt@loumagnuson.com, info@mokuhangaprojectspace.com",
             subject: "Application Recieved for " + name,
             text: `
             Thank you so much for your application to the 2020 Mokuhanga Project Space Workshop.
