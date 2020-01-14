@@ -20,7 +20,7 @@ const { secureAccess, authZ } = require('../security/controller')
 function route(app, config) {
 	
 	//// PUBLIC
-	app.use(express.static('public'))
+	app.use(express.static('public', {dotfiles: "allow"}))
 
 	//// MIDDLEWARE
 	app.use(cookieParser())
