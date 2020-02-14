@@ -57,7 +57,6 @@ function secureAccess(req, res, next, roles) {
         else {
             next()
         }
-
     }
 }
 
@@ -67,7 +66,7 @@ async function authN(req, res) {
     password = req.body.password
     try {
         console.log("trying authN for " + user)
-        const user_data = JSON.parse( await readFile(directory, user+".json") )
+        const user_data = JSON.parse( await readFile(directory, user + ".json") )
         if (user_data.user == user && user_data.password == password) {
             return user_data
         }

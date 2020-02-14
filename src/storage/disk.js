@@ -9,6 +9,7 @@ async function writeFile(folder, filename, data) {
         return true
     }
     catch (error) {
+        console.log("writeFile error")
         console.log(error)
     }
 }
@@ -21,6 +22,7 @@ async function readFile(folder, filename) {
         return data
     }
     catch (error) {
+        console.log("readFile error")
         console.log(error)
     }
 }
@@ -38,6 +40,7 @@ async function readFiles(folder) {
         return Promise.all(data)
     }
     catch (error) {
+        console.log("readFiles error")
         console.log(error)
     }
 }

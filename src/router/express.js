@@ -61,7 +61,7 @@ function route(app, config) {
 	// Application
 	app.get('/application_2020', (req, res) => {
 		try {
-			res.render('application')
+			res.render('application', {open: new Date() >= new Date( "Feb 28 2020 00:00:00 GMT-0800" )})
 		}
 		catch (error) {
 			console.log(error)

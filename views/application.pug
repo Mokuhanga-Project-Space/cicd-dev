@@ -10,40 +10,64 @@ body
     .row(style="text-align:center;")
         h1 2020 Workshop Application
 
-    form(name="application" action="/application_2020" method="post" onsubmit="return validateApplication()")
-        .row
-            .six.columns
-                label Name
-                input.u-full-width(type="text" name="name")
+        hr
 
-            .six.columns
-                label E-Mail
-                input.u-full-width(type="text" name="email")
-        .row
-            .ten.columns
-                label Street Address
-                input.u-full-width(type="text" name="address")
-        .row
-            .six.columns
-                label City
-                input.u-full-width(type="text" name="city")
+        h5 #[b Information and Fee]
 
-            .two.columns
-                label State
-                input.u-full-width(type="text" name="state")
-            .four.columns
-                label Zip Code
-                input.u-full-width(type="text" name="zip")
-        .row
-            hr
-            label Previous Experience
-            p.
-                As this is an advanced workshop, please describe you experience with Mokuhanga and related activities.
-                #[br] #[br]
-                Please include dates, locations, primary instructors, as well as any relevant description of work.
-            textarea.u-full-width(type="text" style="height:40vh;" rows=10 name="experience")
-        .row
-            button.button-primary.u-full-width(type="submit" style="text-align:center;") Submit
+        p.
+            The workshop will be taught by Shōichi Kitamura with enhanced attention by Professors Akira Takemoto and Keiko Hara.
+            The fee is $550.00.
+            The REGISTRATION date is Friday, February 28th.
+            The initial deposit of $150 must be received on this date.
+            The remaining $400.00 balance must be received by Monday, March 16.
+
+        hr
+
+    if locals.open
+
+        form(name="application" action="/application_2020" method="post" onsubmit="return validateApplication()")
+            .row
+                .six.columns
+                    label Name
+                    input.u-full-width(type="text" name="name")
+
+                .six.columns
+                    label E-Mail
+                    input.u-full-width(type="text" name="email")
+            .row
+                .ten.columns
+                    label Street Address
+                    input.u-full-width(type="text" name="address")
+            .row
+                .six.columns
+                    label City
+                    input.u-full-width(type="text" name="city")
+
+                .two.columns
+                    label State
+                    input.u-full-width(type="text" name="state")
+                .four.columns
+                    label Zip Code
+                    input.u-full-width(type="text" name="zip")
+            .row
+                hr
+                label Previous Experience
+                p.
+                    Please tell us about previous experiences in Mokuhanga or in Mokuhanga workshops that you have attended (where, when, primary instructor):
+                textarea.u-full-width(type="text" style="height:40vh;" rows=10 name="experience")
+
+                label Questions and Comments
+                p.
+                    If you have any questions or comments, please feel free to relay them below:
+                textarea.u-full-width(type="text" style="height:40vh;" rows=10 name="questions")
+
+            .row
+                button.button-primary.u-full-width(type="submit" style="text-align:center;") Submit
+
+    else
+        .container
+            .row(style="text-align:center;")
+                h3 Application will open February 28th 2020
 
 script. 
     function validateApplication() {
