@@ -5,6 +5,19 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
+// TO DO
+// GROUP PHOTO 2019
+// Mark Anderson Photo
+
+// Participant Blog
+// // Sensei UI
+// // Email Forwarding
+
+// APPLICATION VIEW ADDITIONS
+// make the line bigger and bolder 
+
+// accept waitlist pending
+// nothing deposit paid-final
 
 // Markdown rendering
 // CLI: npm install jstransformer-markdown-it
@@ -12,8 +25,9 @@ const cookieParser = require('cookie-parser')
 // RENDER OPTIONS: {str: md.render("_italic_ **bold**", {inline: true}).body}
 // PUG USE: != str
 
+
 // Controllers
-const { apply, htmlView } = require('../application/controller')
+const { apply, htmlView, update, updateall, getApplications } = require('../application/controller')
 const { secureAccess, authZ } = require('../security/controller')
  
 //// DEFINITION ////
@@ -26,23 +40,55 @@ function route(app, config) {
 	app.use(cookieParser())
 	app.use(bodyParser.urlencoded({ extended: true }))
 	app.use(bodyParser.json())
+	app.use(bodyParser.text())
 
 	//// FEATURES
 
 	// Splash 
 	app.get('/', (req, res) => {
 		try {
-			res.render('index')
+			res.render('splash/splash')
 		}
 		catch (error) {
 			console.log(error)
 		}
 	})
 
+	// Admin
+
+	app.get('/admin', (req, res, next) => {
+		try {
+			secureAccess(req, res, next, ["admin"])
+		}
+		catch (error) {
+			console.log(error)
+		}
+	}, async (req, res) => {
+		try {
+			const data = await getApplications()
+			res.render('admin/adminsplash', {apps: data})
+		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+
+
+	// About
+	app.get('/aboutus', (req, res) => {
+		try {
+			res.render('about/us')
+		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+
+
 	// Login
 	app.get('/login', (req, res) => {
 		try {
-			res.render('login', {url: req.query.fwd})
+			res.render('security/login', {url: req.query.fwd})
 		}
 		catch (error) {
 			console.log(error)
@@ -61,7 +107,7 @@ function route(app, config) {
 	// Application
 	app.get('/application_2020', (req, res) => {
 		try {
-			res.render('application', {open: new Date() >= new Date( "Feb 28 2020 00:00:00 GMT-0800" )})
+			res.render('application/application', {open: new Date() >= new Date( "Feb 28 2020 09:00:00 GMT-0800" )})
 		}
 		catch (error) {
 			console.log(error)
@@ -72,6 +118,26 @@ function route(app, config) {
 		try {
 			await apply(req, res)
 		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+
+	app.post('/application_2020/update', async (req, res) => {
+		try {
+			await update(req, res)
+		}
+
+		catch (error) {
+			console.log(error)
+		}
+	})
+
+	app.post('/application_2020/updateall', async (req, res) => {
+		try {
+			await updateall(req, res)
+		}
+
 		catch (error) {
 			console.log(error)
 		}

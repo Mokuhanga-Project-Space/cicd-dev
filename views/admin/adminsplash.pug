@@ -1,0 +1,92 @@
+head
+    include ../components/head
+
+body
+
+include ../components/staticnav_admin
+
+br
+br
+
+.container(style="text-align:center")
+    .row
+        h1 Welcome to the Admin Portal
+    
+    hr
+
+    .row
+        h3 #[u 2020 Dashboard]
+        
+        br
+        
+        h4 #[b Accepted]
+        table.u-full-width
+            thead
+                tr
+                    th Name
+                    th Paid
+                    th Email
+                    th Application Number
+            body
+                - let idx = 1
+                - let accepted_emails = ""
+                each app in locals.apps
+                    if app.decision == "accepted"
+                        tr
+                            td #{app.name}
+                            td #{app.paid}
+                            td #{app.email}
+                            td !{idx}
+                        - accepted_emails == "" ? accepted_emails += app.email : accepted_emails += ", " + app.email
+                    - idx++
+
+        br
+
+        h5 Accepted Emails
+        p #{accepted_emails}
+
+        br
+        br
+            
+        h4 #[b Not Accepted]
+        table.u-full-width
+            thead
+                tr
+                    th Name
+                    th Status
+                    th Email
+                    th Application Number
+            body
+                - idx = 1
+                - let waitlisted_emails = ""
+                each app in locals.apps
+                    if app.decision == "waitlisted"
+                        tr
+                            td #{app.name}
+                            td #{app.decision}
+                            td #{app.email}
+                            td !{idx}
+                        - waitlisted_emails == "" ? waitlisted_emails += app.email : waitlisted_emails += ", " + app.email
+                    - idx++
+
+                - idx = 1
+                - let pending_emails = ""
+                each app in locals.apps
+                    if app.decision == "pending"
+                        tr
+                            td #{app.name}
+                            td #{app.decision}
+                            td #{app.email}
+                            td !{idx}
+                        - pending_emails == "" ? pending_emails += app.email : pending_emails += ", " + app.email        
+                    - idx++
+
+        br
+
+        h5 Waitlisted Emails
+        p #{waitlisted_emails}
+    
+        br
+
+        h5 Pending Emails
+        p #{pending_emails}

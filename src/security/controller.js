@@ -16,12 +16,12 @@ async function authZ(req, res) {
             res.redirect(req.query.fwd)
         }
         else {
-            res.render('login_complete')
+            res.render('security/login_complete')
         }
     }
     catch (error) {
         console.log(error)
-        res.render('login_failed')
+        res.render('security/login_failed')
     }
 }
 
@@ -29,7 +29,7 @@ function secureAccess(req, res, next, roles) {
     let accessToken = req.cookies["mokuhanga-access"]
 
     if (!accessToken) {
-        res.render("token_needed", {
+        res.render("security/token_needed", {
             url: req.url,
             reason: "no token"
         })
@@ -39,7 +39,7 @@ function secureAccess(req, res, next, roles) {
         validToken = verifyToken(accessToken)
         
         if (!validToken) {
-            res.render('token_needed', {
+            res.render('security/token_needed', {
                 url: req.url,
                 reason: "invalid token"
             })
@@ -47,7 +47,7 @@ function secureAccess(req, res, next, roles) {
         }
         
         else if (!roles.includes(accessToken.data.role)) {
-            res.render('token_needed', {
+            res.render('security/token_needed', {
                 url: req.url,
                 reason: "invalid role"
             })
@@ -70,11 +70,11 @@ async function authN(req, res) {
         if (user_data.user == user && user_data.password == password) {
             return user_data
         }
-        res.render('login_failed')
+        res.render('security/login_failed')
     }
     catch (error) {
         console.log(error)
-        res.render('login_failed')
+        res.render('security/login_failed')
     }       
 }
 

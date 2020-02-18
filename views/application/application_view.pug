@@ -1,0 +1,141 @@
+doctype html
+html(lang="en")
+head
+  title 2020 Workshop Applications
+  include ../components/head.pug
+
+style.
+    hr.thick {
+        background-color: black;
+        border: none; 
+        height: 3px; 
+    }
+
+    button {
+        display: inline;
+        margin: 2em;
+    }
+
+    label.inline {
+        display: inline;
+    }
+
+script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+
+body(id="body")
+
+include ../components/staticnav_admin.pug
+
+br
+br
+
+.container(style="text-align:center;")
+    .row
+        h1 2020 Workshop Applications
+        hr
+
+    - var app_index = 0
+    each app in locals.apps
+        .row
+            h4 Application !{app_index + 1}
+        .row
+            .six.columns
+                label Name
+                p #{app.name}
+
+            .six.columns
+                label E-Mail
+                p #{app.email}
+        .row
+            .three.columns &nbsp;
+            .six.columns
+                label Address
+                p #{app.address}
+        .row
+            .six.columns
+                label City
+                p #{app.city}
+
+            .two.columns
+                label State
+                p #{app.state}
+            .four.columns
+                label Zip Code
+                p #{app.zip}
+        .row
+            label Previous Experience
+            != app.experience.replace(/\r\n/gi, "<br>")
+
+        br
+
+        .row
+            label Questions and Comments
+            != app.questions.replace(/\r\n/gi, "<br>")
+
+        br
+        br
+
+        - let human_date = new Date( parseInt(app.timestamp) )
+        .row
+                label.inline Submitted: #{human_date}
+
+        .row
+            label.inline Decision: 
+            button.decision(id=`decision_${app_index}`, onclick=`toggleDecision(${app_index})`) #{app.decision}
+
+            label.inline Has Paid: 
+            button.paid(id=`paid_${app_index}`, onclick=`togglePaid(${app_index})` ) #{app.paid}
+            
+        hr.thick
+        - app_index += 1
+
+    if locals.apps.length < 1
+        .h3 No Applications on Server
+
+script.
+    function nextItem(lst, item) {
+        const current_idx = lst.lastIndexOf(item)
+        let next_idx = current_idx + 1
+        if (next_idx == lst.length) {
+            next_idx = 0
+        }
+        return lst[next_idx]
+    }
+
+    let apps = !{JSON.stringify(locals.apps)}
+    let paid_enums = ["nothing", "deposit", "in full"]
+    let decision_enums = ["pending", "waitlisted", "accepted"]
+
+    function togglePaid(idx) {
+        const current_value = apps[idx].paid 
+        const next_value = nextItem(paid_enums, current_value)
+        apps[idx].paid = next_value
+        document.getElementById(`paid_${idx}`).innerHTML = next_value
+        setTimeout(mergeData, 10, idx)
+    }
+
+    function toggleDecision(idx) {
+        const current_value = apps[idx].decision 
+        const next_value = nextItem(decision_enums, current_value)
+        apps[idx].decision = next_value
+        document.getElementById(`decision_${idx}`).innerHTML = next_value
+        setTimeout(mergeData, 10, idx)
+    }
+
+    async function mergeData(idx) {
+        let result = await axios.post("/application_2020/update", apps[idx])
+        if (result) {
+            console.log("SUCCESS")
+        }
+        else {
+            alert("The most recent data sync did not succeed. Please try to toggle back to the same selection again.")
+        }
+    }
+
+    function getApps() {
+        return JSON.stringify( { "apps": apps } )
+    }
+
+    window.addEventListener( "unload", function () {
+        navigator.sendBeacon("/application_2020/updateall", getApps() )
+    })
