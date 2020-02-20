@@ -88,7 +88,7 @@ br
             
         .row
             label Notes
-            textarea(id=`notes_${app_index}`, oninput=`updateNotes(${app_index})`) #{app.notes}
+            textarea(id=`notes_${app_index}`, onblur=`updateNotes(${app_index})`) #{app.notes}
 
         hr.thick
         - app_index += 1
@@ -113,6 +113,7 @@ script.
 
     function updateNotes(idx) {
         apps[idx].notes = document.getElementById(`notes_${idx}`).value
+        setTimeout(mergeData, 10, idx)
     }
 
     function togglePaid(idx) {
