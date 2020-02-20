@@ -86,6 +86,10 @@ br
             label.inline Has Paid: 
             button.paid(id=`paid_${app_index}`, onclick=`togglePaid(${app_index})` ) #{app.paid}
             
+        .row
+            label Notes
+            textarea(id=`notes_${app_index}`, onchange=`updateNotes(${app_index})`) #{app.notes}
+
         hr.thick
         - app_index += 1
 
@@ -93,6 +97,11 @@ br
         .h3 No Applications on Server
 
 script.
+    
+    let apps = !{JSON.stringify(locals.apps)}
+    let paid_enums = ["nothing", "deposit", "in full"]
+    let decision_enums = ["pending", "waitlisted", "accepted"]
+
     function nextItem(lst, item) {
         const current_idx = lst.lastIndexOf(item)
         let next_idx = current_idx + 1
@@ -102,9 +111,9 @@ script.
         return lst[next_idx]
     }
 
-    let apps = !{JSON.stringify(locals.apps)}
-    let paid_enums = ["nothing", "deposit", "in full"]
-    let decision_enums = ["pending", "waitlisted", "accepted"]
+    function updateNotes(idx) {
+        apps[idx].notes = document.getElementById(`notes_${idx}`).value
+    }
 
     function togglePaid(idx) {
         const current_value = apps[idx].paid 

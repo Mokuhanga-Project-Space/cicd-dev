@@ -84,12 +84,13 @@ script.
             city != "" &&
             state != "" &&
             zip  != ""
-        const hasEmail = email != "" email.includes("@")
+            
+        const hasEmail = email != ""
         const hasValidEmail = email.includes("@")
 
         if (!hasValidEmail) { 
             alert("Please enter a valid email address.")
-            return 
+            return false
         }
 
         const hasName = name != ""
@@ -101,6 +102,6 @@ script.
         
         else {
             alert("Please make sure you have completely filled out the form, including either an active mailing or email address.")
+            return false
         }
-        return false
     }

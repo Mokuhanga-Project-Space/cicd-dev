@@ -13,6 +13,7 @@ async function apply(req, res) {
         data.timestamp = timestamp
         data.decision = "pending"
         data.paid = "nothing"
+        data.notes = ""
 
         console.log("trying to submit application for " + name)
         await writeFile(directory, name + "_" + timestamp + ".json", JSON.stringify(data))
@@ -51,7 +52,6 @@ async function update(req, res) {
         res.send("false")
         console.log(error)
     }
-
 }
 
 async function updateall(req, res) {
