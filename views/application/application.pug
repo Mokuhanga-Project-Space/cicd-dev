@@ -68,7 +68,7 @@ br
     else
         .container
             .row(style="text-align:center;")
-                h3 Application will open February 28th, 2020
+                h3 Application will open February 28th, 2020 at 9:00am Pacific Standard Time
 
 script. 
     function validateApplication() {
@@ -84,9 +84,8 @@ script.
             city != "" &&
             state != "" &&
             zip  != ""
-            
-        const hasEmail = email != ""
-        const hasValidEmail = email.includes("@")
+
+        const hasValidEmail = email != "" && email.includes("@")
 
         if (!hasValidEmail) { 
             alert("Please enter a valid email address.")
@@ -94,14 +93,14 @@ script.
         }
 
         const hasName = name != ""
-        const canContact = hasName && (hasEmail || hasAddress)
+        const canContact = hasName && (hasValidEmail || hasAddress)
         
         if (canContact) {
             return true
         }
         
         else {
-            alert("Please make sure you have completely filled out the form, including either an active mailing or email address.")
+            alert("Please make sure you have completely filled out the form. If you have any questions please mail them to info@mokuhangaprojectspace.com to alert our IT staff.")
             return false
         }
     }
