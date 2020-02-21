@@ -101,6 +101,7 @@ script.
     let apps = !{JSON.stringify(locals.apps)}
     let paid_enums = ["nothing", "deposit", "in full"]
     let decision_enums = ["pending", "waitlisted", "accepted"]
+    let changed_idxs = []
 
     function nextItem(lst, item) {
         const current_idx = lst.lastIndexOf(item)
@@ -113,7 +114,9 @@ script.
 
     function updateNotes(idx) {
         apps[idx].notes = document.getElementById(`notes_${idx}`).value
-        setTimeout(mergeData, 10, idx)
+        if ( !changed_idxs.includes(idx) ) {
+            changed_idxs.push(idx)
+        }
     }
 
     function togglePaid(idx) {
@@ -121,7 +124,9 @@ script.
         const next_value = nextItem(paid_enums, current_value)
         apps[idx].paid = next_value
         document.getElementById(`paid_${idx}`).innerHTML = next_value
-        setTimeout(mergeData, 10, idx)
+        if ( !changed_idxs.includes(idx) ) {
+            changed_idxs.push(idx)
+        }
     }
 
     function toggleDecision(idx) {
@@ -129,7 +134,9 @@ script.
         const next_value = nextItem(decision_enums, current_value)
         apps[idx].decision = next_value
         document.getElementById(`decision_${idx}`).innerHTML = next_value
-        setTimeout(mergeData, 10, idx)
+        if ( !changed_idxs.includes(idx) ) {
+            changed_idxs.push(idx)
+        }
     }
 
     async function mergeData(idx) {
@@ -149,3 +156,21 @@ script.
     window.addEventListener( "unload", function () {
         navigator.sendBeacon("/application_2020/updateall", getApps() )
     })
+
+    async function pushChanges() {
+        console.log("tick")
+        while (changed_idxs.length > 0) {
+            let next_idx
+            try {
+                next_idx = changed_idxs.pop()
+                await mergeData(next_idx)
+            }
+            catch (error) {
+                console.log(error)
+                await mergeData(next_idx)
+            }
+        }
+    }
+
+    window.setInterval(pushChanges, 500)
+    
