@@ -85,6 +85,17 @@ function route(app, config) {
 	})
 
 
+	// Photos
+
+	app.get('/photos', (req, res) => {
+		try {
+			res.render('photos/photos')
+		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+
 	// Login
 	app.get('/login', (req, res) => {
 		try {
