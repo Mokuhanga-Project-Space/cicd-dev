@@ -3,27 +3,32 @@ html(lang="en")
 head  
   title Photos
   include ../components/head.pug
+  
+include ../components/staticnav.pug
+
+script.
+    document.getElementById("photos").style.backgroundColor = "steelBlue"
+    document.getElementById("photos").style.color = "white"
 
 body(style="background-color:white")
 
-include ../components/staticnav.pug
 
-br
-br
+  br
+  br
 
-.container(style="text-align:center;")
-    .row
+  .container(style="text-align:center;")
+      .row
 
-        h4 #[b Recent Moments]
+          h4 #[b Recent Moments]
 
-        img(src="images/photos/2019_group.jpg", height="90%", width="90%")
-        h6 2019 Group Photo 
+          img(src="images/photos/2019_group.jpg", height="90%", width="90%")
+          h6 2019 Group Photo 
 
-        br
-        br
+          br
+          br
 
-        img(src="images/photos/andersons.jpg", height="90%", width="90%")
-        h6 Left to Right: Lisa, Patty, and Mark Anderson, Keiko Hara, Ralph Kiggell (2019 guest artist and instructor), and Akira "Ron" Takemoto
+          img(src="images/photos/andersons.jpg", height="90%", width="90%")
+          h6 Left to Right: Lisa, Patty, and Mark Anderson, Keiko Hara, Ralph Kiggell (2019 guest artist and instructor), and Akira "Ron" Takemoto
 
-        br
-        br
+          br
+          br
