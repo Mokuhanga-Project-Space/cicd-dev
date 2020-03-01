@@ -33,5 +33,4 @@ secure.init(app)
 
 // Email Transporter
 const email = require('./src/email/controller')
-console.log(config)
 email.init(config)
