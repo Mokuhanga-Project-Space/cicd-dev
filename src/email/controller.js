@@ -12,10 +12,10 @@ async function confirmApllication(toAddress, name) {
             from: 'info@mokuhangaprojectspace.com',
             to: toAddress,
             bcc: "matt@loumagnuson.com, info@mokuhangaprojectspace.com, takemoto@whitman.edu, lbsealey@icloud.com",
-            subject: "Application Received for " + name,
+            subject: "Waitlist Registration Received for " + name,
             html: `
-            <p> Thank you so much for your application to the 2020 Mokuhanga Project Space Workshop. </p>
-            <p> We will be contacting you March 2nd with the result of your application and further instructions. </p>
+            <p> Thank you so much for your registration to the 2020 Mokuhanga Project Space Workshop waitlist. </p>
+            <p> Should a position become available, you will be contacted straightaway. </p>
             <br>
             Sincerely,
             <br>
