@@ -116,23 +116,23 @@ function route(app, config) {
 	})
 
 	// Application
-	app.get('/application_2020', (req, res) => {
-		try {
-			res.render('application/application', {open: new Date() >= new Date( "Feb 28 2020 09:00:00 GMT-0800" )})
-		}
-		catch (error) {
-			console.log(error)
-		}
-	})
+	// app.get('/application_2020', (req, res) => {
+	// 	try {
+	// 		res.render('application/application', {open: new Date() >= new Date( "Feb 28 2020 09:00:00 GMT-0800" )})
+	// 	}
+	// 	catch (error) {
+	// 		console.log(error)
+	// 	}
+	// })
 
-	app.post('/application_2020', async (req, res) => {
-		try {
-			await apply(req, res)
-		}
-		catch (error) {
-			console.log(error)
-		}
-	})
+	// app.post('/application_2020', async (req, res) => {
+	// 	try {
+	// 		await apply(req, res)
+	// 	}
+	// 	catch (error) {
+	// 		console.log(error)
+	// 	}
+	// })
 
 	app.post('/application_2020/update', async (req, res) => {
 		try {
