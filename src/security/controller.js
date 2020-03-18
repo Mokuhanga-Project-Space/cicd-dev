@@ -15,6 +15,12 @@ async function authZ(req, res) {
         if (req.query.fwd) {
             res.redirect(req.query.fwd)
         }
+        else if (!req.query.fwd && authenticated.role == "admin") {
+            res.redirect("/admin")
+        }
+        else if (!req.query.fwd && authenticated.role == "participant") {
+            res.redirect("/participant")
+        }
         else {
             res.render('security/login_complete')
         }
@@ -43,7 +49,6 @@ function secureAccess(req, res, next, roles) {
                 url: req.url,
                 reason: "invalid token"
             })
-
         }
         
         else if (!roles.includes(accessToken.data.role)) {
@@ -51,7 +56,6 @@ function secureAccess(req, res, next, roles) {
                 url: req.url,
                 reason: "invalid role"
             })
-
         }
 
         else {

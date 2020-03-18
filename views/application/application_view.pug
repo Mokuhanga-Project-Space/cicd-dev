@@ -26,10 +26,7 @@ style.
         display: inline;
     }
 
-script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
-
 body(id="body")
-
 
 br
 br
@@ -102,11 +99,32 @@ br
         .h3 No Applications on Server
 
 script.
-    
+
+    const ws = new WebSocket('wss://localhost:8080');
+
+    ws.addEventListener('open', function (event) {
+        message = {
+            label: "log",
+            data: "'Hello Server!'"
+        }
+        ws.send(JSON.stringify(message))
+    })
+
+    ws.addEventListener('message', function (event) {
+        const data = JSON.parse(event.data)
+        switch (data.label) {
+            case "application_update":
+                updateData(data.idx, data.data)
+                break
+            case "update_failed":
+                console.log("update_failed")
+                break
+        }
+    })
+
     let apps = !{JSON.stringify(locals.apps)}
     let paid_enums = ["nothing", "deposit", "in full"]
     let decision_enums = ["pending", "waitlisted", "accepted"]
-    let changed_idxs = []
 
     function nextItem(lst, item) {
         const current_idx = lst.lastIndexOf(item)
@@ -117,11 +135,16 @@ script.
         return lst[next_idx]
     }
 
+    function updateData(idx, data) {
+        apps[idx] = data
+        document.getElementById(`notes_${idx}`).value = data.notes
+        document.getElementById(`paid_${idx}`).innerHTML = data.paid
+        document.getElementById(`decision_${idx}`).innerHTML = data.decision
+    }
+
     function updateNotes(idx) {
         apps[idx].notes = document.getElementById(`notes_${idx}`).value
-        if ( !changed_idxs.includes(idx) ) {
-            changed_idxs.push(idx)
-        }
+        update(idx)
     }
 
     function togglePaid(idx) {
@@ -129,9 +152,7 @@ script.
         const next_value = nextItem(paid_enums, current_value)
         apps[idx].paid = next_value
         document.getElementById(`paid_${idx}`).innerHTML = next_value
-        if ( !changed_idxs.includes(idx) ) {
-            changed_idxs.push(idx)
-        }
+        update(idx)
     }
 
     function toggleDecision(idx) {
@@ -139,43 +160,15 @@ script.
         const next_value = nextItem(decision_enums, current_value)
         apps[idx].decision = next_value
         document.getElementById(`decision_${idx}`).innerHTML = next_value
-        if ( !changed_idxs.includes(idx) ) {
-            changed_idxs.push(idx)
-        }
+        update(idx)
     }
 
-    async function mergeData(idx) {
-        let result = await axios.post("/application_2020/update", apps[idx])
-        if (result) {
-            console.log("SUCCESS")
+    function update(idx) {
+        let message = {
+            label: "update_application",
+            idx: idx,
+            data: apps[idx]
         }
-        else {
-            alert("The most recent data sync did not succeed. Please try to toggle back to the same selection again.")
-        }
+        ws.send( JSON.stringify(message) )
     }
-
-    function getApps() {
-        return JSON.stringify( { "apps": apps } )
-    }
-
-    window.addEventListener( "unload", function () {
-        navigator.sendBeacon("/application_2020/updateall", getApps() )
-    })
-
-    async function pushChanges() {
-        console.log("tick")
-        while (changed_idxs.length > 0) {
-            let next_idx
-            try {
-                next_idx = changed_idxs.pop()
-                await mergeData(next_idx)
-            }
-            catch (error) {
-                console.log(error)
-                await mergeData(next_idx)
-            }
-        }
-    }
-
-    window.setInterval(pushChanges, 500)
     

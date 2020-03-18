@@ -19,6 +19,8 @@ app.set('view engine', 'pug')
 const express_router = require('./src/router/express.js')
 express_router.route(app, config)
 
+const ws_router = require('./src/router/ws.js')
+
 //// SERVER INIT ////
 
 // HTTP -> HTTPS Redirect Server
@@ -30,6 +32,11 @@ redirect.init()
 const { secure_server } = require('./src/https/secure')
 const secure = new secure_server(config)
 secure.init(app)
+
+// Websocket HTTPS Server
+const { secure_websocket_server } = require('./src/websockets/ws_secure')
+const ws_secure = new secure_websocket_server(config)
+ws_secure.init(ws_router)
 
 // Email Transporter
 const email = require('./src/email/controller')

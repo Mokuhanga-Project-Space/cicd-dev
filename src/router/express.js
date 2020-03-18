@@ -27,7 +27,7 @@ const cookieParser = require('cookie-parser')
 
 
 // Controllers
-const { apply, htmlView, update, updateall, getApplications } = require('../application/controller')
+const { apply, htmlView, getApplications } = require('../application/controller')
 const { secureAccess, authZ } = require('../security/controller')
  
 //// DEFINITION ////
@@ -54,7 +54,41 @@ function route(app, config) {
 		}
 	})
 
-	// Admin
+	// Participant Portal
+
+	app.get('/participant', (req, res, next) => {
+		try {
+			secureAccess(req, res, next, ["admin", "participant"])
+		}
+		catch (error) {
+			console.log(error)
+		}
+	}, async (req, res) => {
+		try {
+			res.render('participant/participantsplash')
+		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+
+	app.get('/participant/news', (req, res, next) => {
+		try {
+			secureAccess(req, res, next, ["admin", "participant"])
+		}
+		catch (error) {
+			console.log(error)
+		}
+	}, async (req, res) => {
+		try {
+			res.render('participant/news')
+		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+ 
+	// Admin Portal
 
 	app.get('/admin', (req, res, next) => {
 		try {
@@ -115,6 +149,8 @@ function route(app, config) {
 		}
 	})
 
+	// APPLICATION FUNCTIONALITY COMMENTED OUT UNTIL NEXT APPLICATION CYCLE
+
 	// Application
 	// app.get('/application_2020', (req, res) => {
 	// 	try {
@@ -133,26 +169,6 @@ function route(app, config) {
 	// 		console.log(error)
 	// 	}
 	// })
-
-	app.post('/application_2020/update', async (req, res) => {
-		try {
-			await update(req, res)
-		}
-
-		catch (error) {
-			console.log(error)
-		}
-	})
-
-	app.post('/application_2020/updateall', async (req, res) => {
-		try {
-			await updateall(req, res)
-		}
-
-		catch (error) {
-			console.log(error)
-		}
-	})
 
 	app.get('/application_2020/view', (req, res, next) => {
 		try {

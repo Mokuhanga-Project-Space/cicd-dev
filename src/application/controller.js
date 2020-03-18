@@ -42,29 +42,11 @@ async function htmlView(req, res) {
     }
 }
 
-async function update(req, res) {
+async function update(data) {
     try {
-        const data = req.body
         await writeFile(directory, data.name + "_" + data.timestamp + ".json", JSON.stringify(data))
-        res.send("true")
     }
     catch (error) {
-        res.send("false")
-        console.log(error)
-    }
-}
-
-async function updateall(req, res) {
-    try {
-        data = JSON.parse(req.body)
-        data = data.apps
-        for (let datum of data) {
-            await writeFile(directory, datum.name + "_" + datum.timestamp + ".json", JSON.stringify(datum))
-        } 
-        res.send("true")
-    }
-    catch (error) {
-        res.send("false")
         console.log(error)
     }
 }
@@ -90,5 +72,4 @@ async function getApplications() {
 exports.apply = apply
 exports.htmlView = htmlView
 exports.update = update
-exports.updateall = updateall
 exports.getApplications = getApplications
