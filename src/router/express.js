@@ -130,6 +130,18 @@ function route(app, config) {
 		}
 	})
 
+
+	// Prints
+
+	app.get('/prints', (req, res) => {
+		try {
+			res.render('prints/prints')
+		}
+		catch (error) {
+			console.log(error)
+		}
+	})
+
 	// Login
 	app.get('/login', (req, res) => {
 		try {
