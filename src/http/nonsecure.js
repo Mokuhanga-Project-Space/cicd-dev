@@ -5,7 +5,7 @@ const http = require('http')
 
 //// DEFINITION ////
 
-class Secure_Server {
+class NonSecure_Server {
     constructor () {
     }
 
@@ -19,5 +19,5 @@ class Secure_Server {
 //// EXPORT ////
 
 //singleton export
-const server = new Secure_Server()
+const server = new NonSecure_Server()
 exports.server = server

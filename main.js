@@ -6,7 +6,8 @@
 const express = require('express')
 
 // Config
-const config = require('../config.json')
+const config = {}
+//const config = require('../config.json')
 
 //// EXPRESS INIT ////
 
@@ -23,21 +24,24 @@ const ws_router = require('./src/router/ws.js')
 
 //// SERVER INIT ////
 
-// HTTP -> HTTPS Redirect Server
-const { redirect_server } = require('./src/http/redirect')
-const redirect = new redirect_server()
-redirect.init()
+const { server } = require('./src/http/nonsecure')
+server.init(app)
 
-// Main HTTPS Server
-const { secure_server } = require('./src/https/secure')
-const secure = new secure_server(config)
-secure.init(app)
+// // HTTP -> HTTPS Redirect Server
+// const { redirect_server } = require('./src/http/redirect')
+// const redirect = new redirect_server()
+// redirect.init()
 
-// Websocket HTTPS Server
-const { secure_websocket_server } = require('./src/websockets/ws_secure')
-const ws_secure = new secure_websocket_server(config)
-ws_secure.init(ws_router)
+// // Main HTTPS Server
+// const { secure_server } = require('./src/https/secure')
+// const secure = new secure_server(config)
+// secure.init(app)
 
-// Email Transporter
-const email = require('./src/email/controller')
-email.init(config)
+// // Websocket HTTPS Server
+// const { secure_websocket_server } = require('./src/websockets/ws_secure')
+// const ws_secure = new secure_websocket_server(config)
+// ws_secure.init(ws_router)
+
+// // Email Transporter
+// const email = require('./src/email/controller')
+// email.init(config)
