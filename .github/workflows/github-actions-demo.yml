@@ -11,5 +11,6 @@ jobs:
           method: github
           githubToken: ${{ secrets.PERSONALBOTTOKEN }}
           secrets: |
-              kv/linode user | SERVERUSER;
-              kv/linode pwd | SERVERPWD;
+              kv/linode user | SERVERUSER_;
+              kv/linode pwd | SERVERPWD_;
+      - run: export SERVERUSER=SERVERUSER_
