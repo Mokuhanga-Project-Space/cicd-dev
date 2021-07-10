@@ -7,7 +7,7 @@ jobs:
       - name: Import Secrets
         uses: hashicorp/vault-action@v2.3.0
         with:
-          url: https://mokuhangaprojecgspace.com:8200
+          url: https://mokuhangaprojectspace.com:8200
           method: github
           githubToken: ${{ secrets.PERSONALBOTTOKEN }}
           secrets: |
