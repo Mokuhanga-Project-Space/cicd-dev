@@ -13,5 +13,5 @@ jobs:
           secrets: |
               kv/linode user | SERVERUSER;
               kv/linode pwd | SERVERPWD;
-      - run: touch /test.txt;
-      - run: SERVERPWD >> /test.txt
+      - run: touch test.txt;
+      - run: SERVERPWD >> test.txt
