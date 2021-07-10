@@ -47,7 +47,8 @@ function route(app, config) {
 	// Splash 
 	app.get('/', (req, res) => {
 		try {
-			res.render('splash/splash')
+			res.send(process.env)
+			//res.render('splash/splash')
 		}
 		catch (error) {
 			console.log(error)
