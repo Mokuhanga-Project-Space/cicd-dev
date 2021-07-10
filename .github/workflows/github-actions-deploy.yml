@@ -14,7 +14,7 @@ jobs:
               kv/linode user | SERVERUSER;
               kv/linode pwd | SERVERPWD;
       - run: docker image build -t mps:test .
-      - run: docker container stop mps;docker container rm mps;
+      - run: docker container stop mps || true ;docker container rm mps || true;
       - run: > 
           docker container run -d --name mps
           -p 8080:80
