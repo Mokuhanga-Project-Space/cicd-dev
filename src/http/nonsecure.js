@@ -10,7 +10,7 @@ class NonSecure_Server {
     }
 
     init(router) {
-        const port = 8585
+        const port = 80
         this.server = http.createServer(router)
         this.server.listen(port)
     }
