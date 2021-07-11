@@ -12,7 +12,7 @@ const config = {}
 //// EXPRESS INIT ////
 
 const app = express()
-app.set('view engine', 'pug')
+//app.set('view engine', 'pug')
 
 //// ROUTING ////
 
