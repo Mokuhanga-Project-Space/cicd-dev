@@ -17,5 +17,5 @@ jobs:
       - run: docker container stop mps || true ;docker container rm mps || true;
       - run: > 
           docker container run -d --name mps
-          -p 8585:8585
+          -p 80:8585
           -e USERPWD="MATTSHACK" mps:test
